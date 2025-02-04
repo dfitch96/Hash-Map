@@ -1,10 +1,13 @@
+const {Node, LinkedList} = require('./linkedlist');
 
 
 class HashMap {
 
-    constructor(loadFactor=0.8, capacity=16){
+    constructor(loadFactor=0.8){
       this.loadFactor = loadFactor;
-      this.capacity = capacity;
+      this.capacity = 16;
+      this.size = 0;
+      this.buckets = [];
     }
 
     hash(key){
@@ -12,10 +15,49 @@ class HashMap {
 
       const primeNum = 31;
       for (let i = 0; i < key.length; i++){
-        hashCode = primeNum * hashCode + key.charCodeAt(i);
+        hashCode = (primeNum * hashCode + key.charCodeAt(i)) % this.capacity;
+      }
+      return hashCode;
+    }
+
+
+    // if the key is already in the hashmap, update the value
+    // if not, create a new list node and append it to the bucket
+    set(key, value){
+      
+      const hashCode = this.hash(key);
+      let bucket = this.buckets[hashCode];
+      if (typeof bucket === "undefined"){
+        bucket = new LinkedList();
+        this.buckets[hashCode - 1] = bucket;
       }
 
-      return hashCode;
+      if (!bucket.contains(key)){
+        const newNode = new Node(key, value);
+        bucket.append(newNode)
+
+      } else {
+        const listIndex = bucket.find(key);
+        const node = bucket.at(listIndex);
+        node.value = value;
+      }
+
+      
+    }
+
+    get(key){
+
+      const hashCode = this.hash(key);
+      let bucket = this.buckets[hashCode - 1];
+
+      if (typeof bucket !== "undefined"){
+        const listIndex = bucket.find(key);
+        const node = bucket.at(listIndex);
+        return node.value;
+      }
+
+      return null;
+
     }
 
 }

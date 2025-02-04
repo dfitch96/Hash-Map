@@ -8,9 +8,46 @@ describe("HashMap", () =>{
         hashMap = new HashMap();
     });
 
-    test("Default hashmap should have load factor 0.8 and capacity 16", () => {
+    test("default hashmap should have load factor 0.8 and capacity 16", () => {
         expect(hashMap.capacity).toBe(16);
         expect(hashMap.loadFactor).toBe(0.8);
     });
+
+    test("hash function should give different hashes for a majority of keys with identical characters", () => {
+        expect(hashMap.hash("abca")).not.toBe(hashMap.hash("bcaa"));
+        
+    });
+    
+    test("empty key gives hash code of 0", () => {
+        expect(hashMap.hash("")).toBe(0);
+        
+    });
+
+    test("buckets should contain key at the index of the computed hashCode", () => {
+        const key = "abca";
+        const hashCode = hashMap.hash(key);
+        hashMap.set(key, 5);
+        expect(hashMap.buckets[hashCode - 1].contains(key)).toBe(true);
+    });
+
+    
+    test("get function should return the value 5 for the key abca", () => {
+        const key = "abca";
+        hashMap.set(key, 5);
+        expect(hashMap.get(key)).toBe(5);
+    });
+
+    test("set should correctly update the value of a key if the key is already inserted into the hashmap", () => {
+        const key = "abca";
+        hashMap.set(key, 5);
+        hashMap.set(key, 10);
+        expect(hashMap.get(key)).toBe(10);
+    })
+
+
+    test("get function should return null for keys that dont exist within the hashmap", () => {
+        const key = "afdasf";
+        expect(hashMap.get(key)).toBe(null);
+    })
 
 });
