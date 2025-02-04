@@ -44,6 +44,18 @@ describe("HashMap", () =>{
         expect(hashMap.get(key)).toBe(10);
     })
 
+    test("set should correctly store key value pairs when there is a collision", () => {
+
+        const key1 = "Rama";
+        const key2 = "Sita";
+        hashMap.set(key1, 1);
+        hashMap.set(key2, 5);
+        expect(hashMap.get(key1)).toBe(1);
+        expect(hashMap.get(key2)).toBe(5);
+
+
+    })
+
 
     test("get function should return null for keys that dont exist within the hashmap", () => {
         const key = "afdasf";

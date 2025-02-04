@@ -26,7 +26,7 @@ class HashMap {
     set(key, value){
       
       const hashCode = this.hash(key);
-      let bucket = this.buckets[hashCode];
+      let bucket = this.buckets[hashCode - 1];
       if (typeof bucket === "undefined"){
         bucket = new LinkedList();
         this.buckets[hashCode - 1] = bucket;
@@ -35,6 +35,7 @@ class HashMap {
       if (!bucket.contains(key)){
         const newNode = new Node(key, value);
         bucket.append(newNode)
+        this.size += 1;
 
       } else {
         const listIndex = bucket.find(key);
