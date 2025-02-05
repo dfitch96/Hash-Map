@@ -50,8 +50,7 @@ class HashMap {
     // else, create a new list node and append it to the bucket
     set(key, value){
 
-      if(this.size + 1>= this.capacity * this.loadFactor){
-        console.log("growing");
+      if(this.size + 1 >= this.capacity * this.loadFactor){
         this.grow();
       }
       

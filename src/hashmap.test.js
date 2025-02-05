@@ -8,7 +8,7 @@ describe("HashMap", () =>{
         hashMap = new HashMap(0.5);
     });
 
-    test("default hashmap should have load factor 0.8 and capacity 16", () => {
+    test("hashmap should have load factor 0.5 and capacity 16", () => {
         expect(hashMap.capacity).toBe(16);
         expect(hashMap.loadFactor).toBe(0.5);
     });
