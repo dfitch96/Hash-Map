@@ -11,6 +11,10 @@ class HashMap {
       this.initBuckets();
     }
 
+    get length(){
+      return this.size;
+    }
+
     initBuckets(){
       
       for(let i = 0; i < this.capacity; i++){
@@ -35,12 +39,12 @@ class HashMap {
     set(key, value){
       
       const hashCode = this.hash(key);
-      let bucket = this.buckets[hashCode - 1];
+      const bucket = this.buckets[hashCode - 1];
 
       if (!bucket.contains(key)){
         const newNode = new Node(key, value);
         bucket.append(newNode)
-        this.size += 1;
+        this.size++;
 
       } else {
         const listIndex = bucket.find(key);
@@ -54,7 +58,7 @@ class HashMap {
     get(key){
 
       const hashCode = this.hash(key);
-      let bucket = this.buckets[hashCode - 1];
+      const bucket = this.buckets[hashCode - 1];
       
       const listIndex = bucket.find(key);
       if(listIndex !== null){
@@ -64,6 +68,30 @@ class HashMap {
 
       return null;
     }
+
+
+    has(key){
+      const hashCode = this.hash(key);
+      const bucket = this.buckets[hashCode - 1];
+      return bucket.contains(key);
+    }
+
+    remove(key){
+
+      const hashCode = this.hash(key);
+      const bucket = this.buckets[hashCode - 1];
+
+      const listIndex = bucket.find(key);
+      if(listIndex !== null){
+        bucket.removeAt(listIndex);
+        this.size--;
+        return true;
+      }
+
+      return false;
+    }
+
+   
 
 }
 
