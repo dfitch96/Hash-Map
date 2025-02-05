@@ -27,7 +27,7 @@ describe("HashMap", () =>{
         const key = "abca";
         const hashCode = hashMap.hash(key);
         hashMap.set(key, 5);
-        expect(hashMap.buckets[hashCode - 1].contains(key)).toBe(true);
+        expect(hashMap.buckets[hashCode].contains(key)).toBe(true);
     });
 
     
@@ -113,6 +113,78 @@ describe("HashMap", () =>{
         hashMap.set(key, 5);
         expect(hashMap.length).toBe(1);
     });
+
+    test("clear function successfully removes all key value pairs", () => {
+        const key1 = "Rama";
+        const key2 = "Sita";
+        const key3 = "Dylan";
+        const key4 = "Joe";
+
+        const keys = ["Rama", "Sita", "Dylan", "Joe"];
+        let val = 0;
+        for(const key of keys){
+            hashMap.set(key, val);
+            val++;
+        }
+
+        hashMap.clear();
+
+        for(const key of keys){
+            expect(hashMap.has(key)).toBe(false);
+        }
+
+    });
+
+    test("hash map contains multiple key value pairs", () => {
+   
+        const keys = ["Rama", "Sita", "Dylan", "Joe"];
+        let val = 0;
+        for(const key of keys){
+            hashMap.set(key, val);
+            val++;
+        }
+
+        for(const key of keys){
+            expect(hashMap.has(key)).toBe(true);
+        }
+
+    });
+
+    test("keys function returns the correct array of keys", () => {
+
+        const keys = ["Rama", "Sita", "Dylan", "Joe"];
+        let val = 0;
+        for(const key of keys){
+            hashMap.set(key, val);
+            val++;
+        }
+
+        for(const key of hashMap.keys()){
+            expect(keys.includes(key)).toBe(true);
+        }
+
+    });
+
+    test("values function returns the correct array of values", () => {
+
+        const keys = ["Rama", "Sita", "Dylan", "Joe"];
+        const values = [];
+        let val = 0;
+        for(const key of keys){
+            values.push(val);
+            hashMap.set(key, val);
+            val++;
+        }
+
+        for(const value of hashMap.values()){
+            expect(values.includes(value)).toBe(true);
+        }
+
+    });
+
+
+
+
 
 
 });
