@@ -5,12 +5,12 @@ describe("HashMap", () =>{
     let hashMap;
 
     beforeEach(() => {
-        hashMap = new HashMap();
+        hashMap = new HashMap(0.5);
     });
 
     test("default hashmap should have load factor 0.8 and capacity 16", () => {
         expect(hashMap.capacity).toBe(16);
-        expect(hashMap.loadFactor).toBe(0.8);
+        expect(hashMap.loadFactor).toBe(0.5);
     });
 
     test("hash function should give different hashes for a majority of keys with identical characters", () => {
@@ -179,12 +179,21 @@ describe("HashMap", () =>{
         for(const value of hashMap.values()){
             expect(values.includes(value)).toBe(true);
         }
-
     });
 
 
+    test('set function adds key-value pairs and triggers grow correctly', () => {
 
+        const initialCapacity = hashMap.capacity;
+        for(let i = 0; i < initialCapacity / 2; i++){
+            hashMap.set(`key_${i}`, i);
+        }
 
+        expect(hashMap.capacity).toBe(initialCapacity * 2);
 
+        for(let i = 0; i < initialCapacity / 2; i++){
+            expect(hashMap.get(`key_${i}`)).toBe(i);
+        }
+    });
 
 });

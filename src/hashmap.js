@@ -33,10 +33,27 @@ class HashMap {
       return hashCode;
     }
 
+    grow(){
+     
+      const entries = this.entries();
+      this.capacity = this.capacity * 2;
+      this.clear();
+
+      for(const entry of entries){
+        this.set(entry[0], entry[1]);
+      }
+
+
+    }
 
     // if the key is already in the hashmap, update the value
     // else, create a new list node and append it to the bucket
     set(key, value){
+
+      if(this.size + 1>= this.capacity * this.loadFactor){
+        console.log("growing");
+        this.grow();
+      }
       
       const hashCode = this.hash(key);
       const bucket = this.buckets[hashCode];
